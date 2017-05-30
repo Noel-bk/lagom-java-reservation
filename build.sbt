@@ -29,7 +29,7 @@ lazy val `reservation-impl` = (project in file("reservation-impl"))
   )
   .settings(lagomForkedTestSettings: _*)
   .dependsOn(`reservation-api`)
-val lombok = "org.projectlombok" % "lombok" % "1.16.10"
+val lombok = "org.projectlombok" % "lombok" % "1.16.16"
 
 def common = Seq(
   javacOptions in compile += "-parameters"
