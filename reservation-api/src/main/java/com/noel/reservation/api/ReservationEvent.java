@@ -15,17 +15,17 @@ import lombok.Value;
 })
 public interface ReservationEvent {
 
-  String getName();
+    String getName();
 
-  @Value
-  final class GreetingMessageChanged implements ReservationEvent {
-    public final String name;
-    public final String message;
+    @Value
+    final class GreetingMessageChanged implements ReservationEvent {
+        public final String name;
+        public final String message;
 
-    @JsonCreator
-    public GreetingMessageChanged(String name, String message) {
-      this.name = Preconditions.checkNotNull(name, "name");
-      this.message = Preconditions.checkNotNull(message, "message");
+        @JsonCreator
+        public GreetingMessageChanged(String name, String message) {
+            this.name = Preconditions.checkNotNull(name, "name");
+            this.message = Preconditions.checkNotNull(message, "message");
+        }
     }
-  }
 }

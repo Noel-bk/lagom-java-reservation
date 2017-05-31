@@ -11,8 +11,8 @@ import com.noel.reservation.api.ReservationService;
  * The module that binds the ReservationService so that it can be served.
  */
 public class ReservationModule extends AbstractModule implements ServiceGuiceSupport {
-  @Override
-  protected void configure() {
-    bindService(ReservationService.class, ReservationServiceImpl.class);
-  }
+    @Override
+    protected void configure() {
+        bindService(ReservationService.class, ReservationServiceImpl.class);
+    }
 }

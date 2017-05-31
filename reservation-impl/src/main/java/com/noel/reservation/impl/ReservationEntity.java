@@ -3,15 +3,14 @@
  */
 package com.noel.reservation.impl;
 
-import java.time.LocalDateTime;
-import java.util.Optional;
-
-import com.lightbend.lagom.javadsl.persistence.PersistentEntity;
-
 import akka.Done;
+import com.lightbend.lagom.javadsl.persistence.PersistentEntity;
 import com.noel.reservation.impl.ReservationCommand.Hello;
 import com.noel.reservation.impl.ReservationCommand.UseGreetingMessage;
 import com.noel.reservation.impl.ReservationEvent.GreetingMessageChanged;
+
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 /**
  * This is an event sourced entity. It has a state, {@link ReservationState}, which
@@ -34,12 +33,12 @@ import com.noel.reservation.impl.ReservationEvent.GreetingMessageChanged;
  */
 public class ReservationEntity extends PersistentEntity<ReservationCommand, ReservationEvent, ReservationState> {
 
-  /**
-   * An entity can define different behaviours for different states, but it will
-   * always start with an initial behaviour. This entity only has one behaviour.
-   */
-  @Override
-  public Behavior initialBehavior(Optional<ReservationState> snapshotState) {
+    /**
+     * An entity can define different behaviours for different states, but it will
+     * always start with an initial behaviour. This entity only has one behaviour.
+     */
+    @Override
+    public Behavior initialBehavior(Optional<ReservationState> snapshotState) {
 
     /*
      * Behaviour is defined using a behaviour builder. The behaviour builder
@@ -50,40 +49,40 @@ public class ReservationEntity extends PersistentEntity<ReservationCommand, Rese
      *
      * Otherwise, the default state is to use the Hello greeting.
      */
-    BehaviorBuilder b = newBehaviorBuilder(
-        snapshotState.orElse(new ReservationState("Hello", LocalDateTime.now().toString())));
+        BehaviorBuilder b = newBehaviorBuilder(
+            snapshotState.orElse(new ReservationState("Hello", LocalDateTime.now().toString())));
 
     /*
      * Command handler for the UseGreetingMessage command.
      */
-    b.setCommandHandler(UseGreetingMessage.class, (cmd, ctx) ->
-    // In response to this command, we want to first persist it as a
-    // GreetingMessageChanged event
-    ctx.thenPersist(new GreetingMessageChanged(entityId(), cmd.message),
-        // Then once the event is successfully persisted, we respond with done.
-        evt -> ctx.reply(Done.getInstance())));
+        b.setCommandHandler(UseGreetingMessage.class, (cmd, ctx) ->
+            // In response to this command, we want to first persist it as a
+            // GreetingMessageChanged event
+            ctx.thenPersist(new GreetingMessageChanged(entityId(), cmd.message),
+                // Then once the event is successfully persisted, we respond with done.
+                evt -> ctx.reply(Done.getInstance())));
 
     /*
      * Event handler for the GreetingMessageChanged event.
      */
-    b.setEventHandler(GreetingMessageChanged.class,
-        // We simply update the current state to use the greeting message from
-        // the event.
-        evt -> new ReservationState(evt.message, LocalDateTime.now().toString()));
+        b.setEventHandler(GreetingMessageChanged.class,
+            // We simply update the current state to use the greeting message from
+            // the event.
+            evt -> new ReservationState(evt.message, LocalDateTime.now().toString()));
 
     /*
      * Command handler for the Hello command.
      */
-    b.setReadOnlyCommandHandler(Hello.class,
-        // Get the greeting from the current state, and prepend it to the name
-        // that we're sending
-        // a greeting to, and reply with that message.
-        (cmd, ctx) -> ctx.reply(state().message + ", " + cmd.name + "!"));
+        b.setReadOnlyCommandHandler(Hello.class,
+            // Get the greeting from the current state, and prepend it to the name
+            // that we're sending
+            // a greeting to, and reply with that message.
+            (cmd, ctx) -> ctx.reply(state().message + ", " + cmd.name + "!"));
 
     /*
      * We've defined all our behaviour, so build and return it.
      */
-    return b.build();
-  }
+        return b.build();
+    }
 
 }
