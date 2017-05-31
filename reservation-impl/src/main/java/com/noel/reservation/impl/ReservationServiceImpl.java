@@ -52,6 +52,12 @@ public class ReservationServiceImpl implements ReservationService {
 
     }
 
+    // TODO
+    @Override
+    public ServiceCall<NotUsed, String> getReservation() {
+        return null;
+    }
+
     @Override
     public Topic<com.noel.reservation.api.ReservationEvent> helloEvents() {
         // We want to publish all the shards of the hello event

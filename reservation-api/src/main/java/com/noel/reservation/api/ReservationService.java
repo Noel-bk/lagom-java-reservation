@@ -32,6 +32,10 @@ public interface ReservationService extends Service {
      */
     ServiceCall<GreetingMessage, Done> useGreeting(String id);
 
+    // TODO
+    // fix return type
+    ServiceCall<NotUsed, String> getReservation();
+
     /**
      * This gets published to Kafka.
      */
@@ -42,7 +46,8 @@ public interface ReservationService extends Service {
         // @formatter:off
         return named("reservation").withCalls(
             pathCall("/api/hello/:id", this::hello),
-            pathCall("/api/hello/:id", this::useGreeting)
+            pathCall("/api/hello/:id", this::useGreeting),
+            pathCall("/api/reservation/:id", this::getReservation)
         ).publishing(
             topic("hello-events", this::helloEvents)
                 // Kafka partitions messages, messages within the same partition will
