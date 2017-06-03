@@ -44,7 +44,7 @@ lazy val `user-impl` = (project in file("user-impl"))
   .settings(common: _*)
   .settings(
     libraryDependencies ++= Seq(
-      //      lagomJavadslPersistenceCassandra,
+      lagomJavadslPersistenceCassandra,
       //      lagomJavadslKafkaBroker,
       //      lagomJavadslTestKit,
       lombok
