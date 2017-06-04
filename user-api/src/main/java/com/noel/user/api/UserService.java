@@ -20,7 +20,7 @@ public interface UserService extends Service {
     default Descriptor descriptor() {
         return named("user").withCalls(
             pathCall("/api/user/:userId", this::getUser),
-            namedCall("/api/users", this::createUser)
+            namedCall("/api/user", this::createUser)
         ).withAutoAcl(true);
     }
 
